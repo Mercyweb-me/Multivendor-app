@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Edit Product</title>
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100">
+
+<div class="max-w-2xl mx-auto mt-10 bg-white p-8 shadow rounded">
+
+<h2 class="text-xl font-bold mb-6">
+Edit Product
+</h2>
+
+<form method="POST" enctype="multipart/form-data">
+{% csrf_token %}
+
+<input type="text" name="name"
+value="{{ product.name }}"
+class="w-full border p-3 mb-3 rounded">
+
+<textarea name="description"
+class="w-full border p-3 mb-3 rounded">{{ product.description }}</textarea>
+
+<select name="category"
+class="w-full border p-3 mb-3 rounded">
+
+{% for c in categories %}
+<option value="{{ c.id }}"
+{% if product.category.id == c.id %}selected{% endif %}>
+{{ c.name }}
+</option>
+{% endfor %}
+
+</select>
+
+<input type="number" name="price"
+value="{{ product.price }}"
+class="w-full border p-3 mb-3 rounded">
+
+<input type="number" name="stock"
+value="{{ product.stock }}"
+class="w-full border p-3 mb-3 rounded">
+
+<input type="file" name="image"
+class="w-full border p-3 mb-3 rounded">
+
+<button class="w-full bg-indigo-600 text-white py-3 rounded">
+Update Product
+</button>
+
+</form>
+
+</div>
+
+</body>
+</html>

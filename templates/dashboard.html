@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dashboard</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+<link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+
+</head>
+<div id="toast-container" class="fixed top-5 right-5 z-50 space-y-2"></div>
+<audio id="notif-sound" preload="auto">
+    <source src="https://notificationsounds.com/storage/sounds/file-sounds-1150-pristine.mp3" type="audio/mpeg">
+    </audio>
+    <script>
+        function showToast(message){
+            const container = document.getElementById("toast-container");
+        
+            const toast = document.createElement("div");
+            toast.className = "bg-white shadow-lg rounded-lg px-4 py-3 border-l-4 border-blue-500 animate-slide";
+            toast.innerHTML = `
+                <div class="flex items-center">
+                    <span class="font-semibold text-gray-800">${message}</span>
+                </div>
+            `;
+        
+            container.appendChild(toast);
+        
+            setTimeout(() => {
+                toast.remove();
+            }, 5000);
+        }
+        
+        function checkNotifications(){
+            fetch("/notifications-check/")
+            .then(res => res.json())
+            .then(data => {
+                if(data.new){
+                    showToast(data.message);
+                    document.getElementById("notif-sound").play();
+        
+                    const bell = document.getElementById("notif-count");
+                    if(bell){
+                        bell.innerText = data.count;
+                        bell.style.display = "inline-block";
+                    }
+                }
+            });
+        }
+        
+        setInterval(checkNotifications, 5000);
+        </script>
+
+<body class="bg-gradient-to-br from-gray-50 to-gray-200 min-h-screen">
+
+<!-- TOP NAV -->
+<header class="bg-white shadow-md px-6 py-4 flex justify-between items-center">
+
+<div class="flex items-center space-x-4">
+
+<!-- Hamburger -->
+<button id="menuBtn" class="md:hidden text-gray-700 text-xl">
+<i class="fas fa-bars"></i>
+</button>
+
+<h1 class="text-xl font-bold text-indigo-600">
+MultiVendor
+</h1>
+
+</div>
+
+<div class="flex items-center space-x-6">
+
+    <a href="{% url 'notifications' %}" class="relative">
+        <i class="fas fa-bell text-xl"></i>
+        
+        <span id="notif-count"
+        class="absolute -top-2 -right-2 bg-red-600 text-white
+        text-xs px-2 py-0.5 rounded-full">
+        {{ notifications_count }}
+        </span>
+        </a>
+
+<!-- Profile -->
+<a href="{% url 'profile' %}" class="text-gray-600 hover:text-indigo-600">
+<i class="fas fa-user-circle text-2xl"></i>
+</a>
+
+</div>
+
+</header>
+
+
+<div class="flex">
+
+<!-- SIDEBAR -->
+<aside id="sidebar"
+class="bg-white shadow-lg w-64 min-h-screen fixed md:relative
+transform -translate-x-full md:translate-x-0 transition duration-300 z-50">
+
+<div class="p-6">
+
+<h2 class="font-bold text-lg mb-6">
+{{ request.user.username }}
+</h2>
+
+<nav class="space-y-4">
+
+<a href="#" class="flex items-center space-x-3 text-indigo-600">
+<i class="fas fa-home"></i>
+<span>Dashboard</span>
+</a>
+
+<a href="/products" class="flex items-center space-x-3 text-gray-600 hover:text-indigo-600">
+<i class="fas fa-box"></i>
+<span>Products</span>
+</a>
+
+{% if request.user.role == "buyer" %}
+<a href="/cart" class="flex items-center space-x-3 text-gray-600 hover:text-indigo-600">
+<i class="fas fa-shopping-cart"></i>
+<span>Cart</span>
+</a>
+{% endif %}
+
+{% if request.user.role == "vendor" %}
+<a href="/post-product" class="flex items-center space-x-3 text-gray-600 hover:text-indigo-600">
+<i class="fas fa-plus-circle"></i>
+<span>Post Product</span>
+</a>
+
+<a href="/vendor-products" class="flex items-center space-x-3 text-gray-600 hover:text-indigo-600">
+<i class="fas fa-store"></i>
+<span>My Products</span>
+</a>
+
+<a href="{% url 'vendor_earnings' %}" class="flex items-center space-x-3 text-gray-600 hover:text-indigo-600">
+<i class="fas fa-wallet"></i>
+<span>Earnings</span>
+</a>
+{% endif %}
+
+<a href="/orders" class="flex items-center space-x-3 text-gray-600 hover:text-indigo-600">
+<i class="fas fa-shopping-bag"></i>
+<span>Orders</span>
+</a>
+
+</nav>
+
+</div>
+
+</aside>
+
+
+<!-- MAIN -->
+<main class="flex-1 p-8 md:ml-0">
+
+<h2 class="text-2xl font-bold mb-6" data-aos="fade-down">
+Welcome, {{ request.user.username }}
+</h2>
+
+
+<!-- STATS -->
+<div class="grid md:grid-cols-3 gap-6 mb-8">
+
+<div class="bg-white p-6 rounded-xl shadow hover:shadow-xl transition"
+data-aos="fade-up">
+<i class="fas fa-box text-indigo-600 text-2xl"></i>
+<h3 class="text-gray-500 mt-2">Products</h3>
+<p class="text-2xl font-bold">0</p>
+</div>
+
+<div class="bg-white p-6 rounded-xl shadow hover:shadow-xl transition"
+data-aos="fade-up" data-aos-delay="100">
+<i class="fas fa-shopping-cart text-green-600 text-2xl"></i>
+<h3 class="text-gray-500 mt-2">Orders</h3>
+<p class="text-2xl font-bold">0</p>
+</div>
+
+<div class="bg-white p-6 rounded-xl shadow hover:shadow-xl transition"
+data-aos="fade-up" data-aos-delay="200">
+<i class="fas fa-wallet text-yellow-600 text-2xl"></i>
+<h3 class="text-gray-500 mt-2">Revenue</h3>
+<p class="text-2xl font-bold">$0</p>
+</div>
+
+</div>
+
+
+<!-- BUYER SEARCH -->
+{% if request.user.role == "buyer" %}
+<div class="bg-white p-6 rounded-xl shadow mb-8"
+data-aos="fade-up">
+
+<h3 class="font-bold mb-3">Search Products</h3>
+
+<div class="flex">
+<input type="text"
+placeholder="Search products..."
+class="w-full border p-3 rounded-l-lg">
+
+<button class="bg-indigo-600 text-white px-6 rounded-r-lg">
+<i class="fas fa-search"></i>
+</button>
+</div>
+
+</div>
+{% endif %}
+
+
+<!-- VENDOR CTA -->
+{% if request.user.role == "vendor" %}
+<div class="bg-indigo-600 text-white p-6 rounded-xl shadow mb-8
+flex justify-between items-center"
+data-aos="zoom-in">
+
+<div>
+<h3 class="font-bold text-lg">Start Selling</h3>
+<p class="text-sm opacity-80">
+Upload and manage your products
+</p>
+</div>
+
+<a href="/post-product"
+class="bg-white text-indigo-600 px-4 py-2 rounded-lg">
+Post Product
+</a>
+
+</div>
+{% endif %}
+
+
+<!-- RECENT -->
+<h3 class="font-bold mb-4" data-aos="fade-up">
+    Recent Products
+    </h3>
+    
+    <div class="grid md:grid-cols-4 gap-6">
+    
+    {% for p in products %}
+    
+    <div class="bg-white rounded-xl shadow hover:shadow-xl transition p-4"
+    data-aos="fade-up">
+    
+    {% if p.image %}
+    <img src="{{ p.image.url }}" class="h-12 w-12 rounded object-cover">
+{% else %}
+    <div class="h-12 w-12 bg-gray-200 rounded"></div>
+{% endif %}
+
+    <h4 class="font-semibold mt-3">
+    {{ p.name }}
+    </h4>
+    
+    <p class="text-green-600 font-bold">
+    ₦{{ p.price }}
+    </p>
+    
+    <p class="text-xs text-gray-400">
+    {{ p.vendor.store_name }}
+    </p>
+    
+    {% if request.user.role == "buyer" %}
+    <a href="{% url 'add_to_cart' p.id %}"
+    class="block mt-2 text-center bg-indigo-600 text-white py-2 rounded-lg">
+    <i class="fas fa-cart-plus"></i> Add to Cart
+    </a>
+    {% endif %}
+    
+    </div>
+    
+    {% empty %}
+    
+    <p class="text-gray-500">No products yet</p>
+    
+    {% endfor %}
+    
+    </div>
+
+
+{% if request.user.role == "buyer" %}
+<button class="mt-2 w-full bg-indigo-600 text-white py-2 rounded-lg">
+Add to Cart
+</button>
+{% endif %}
+
+</div>
+
+</div>
+
+</div>
+
+</main>
+
+</div>
+
+
+<script>
+AOS.init({
+duration: 800,
+once: true
+})
+
+const menuBtn = document.getElementById('menuBtn')
+const sidebar = document.getElementById('sidebar')
+
+menuBtn.addEventListener('click', () => {
+sidebar.classList.toggle('-translate-x-full')
+})
+</script>
+
+</body>
+</html>

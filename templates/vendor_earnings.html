@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Vendor Earnings</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+</head>
+
+<body class="bg-gray-100">
+
+<!-- TOP BAR -->
+<div class="bg-white shadow p-4 flex justify-between items-center">
+
+<div class="flex items-center space-x-3">
+<a href="{% url 'dashboard' %}" class="text-gray-600">
+<i class="fas fa-arrow-left text-xl"></i>
+</a>
+
+<h1 class="font-bold text-xl">
+<i class="fas fa-wallet"></i> Earnings
+</h1>
+</div>
+
+</div>
+
+
+<div class="max-w-7xl mx-auto mt-6">
+
+<!-- SUMMARY CARDS -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+
+<div class="bg-white p-5 rounded-lg shadow">
+<p class="text-gray-500">Total Earnings</p>
+<h2 class="text-2xl font-bold text-green-600">
+₦{{ total_earnings }}
+</h2>
+</div>
+
+<div class="bg-white p-5 rounded-lg shadow">
+<p class="text-gray-500">Total Orders</p>
+<h2 class="text-2xl font-bold">
+{{ total_orders }}
+</h2>
+</div>
+
+<div class="bg-white p-5 rounded-lg shadow">
+<p class="text-gray-500">Pending Payout</p>
+<h2 class="text-2xl font-bold text-yellow-600">
+₦{{ pending_payout }}
+</h2>
+</div>
+
+<div class="bg-white p-5 rounded-lg shadow">
+<p class="text-gray-500">Paid</p>
+<h2 class="text-2xl font-bold text-blue-600">
+₦{{ paid_payout }}
+</h2>
+</div>
+
+</div>
+
+
+<!-- EARNINGS TABLE -->
+<div class="bg-white mt-8 rounded-lg shadow">
+
+<div class="p-4 border-b">
+<h2 class="font-bold">Recent Earnings</h2>
+</div>
+
+<table class="w-full">
+
+<thead class="bg-gray-50">
+<tr>
+<th class="p-3 text-left">Order</th>
+<th class="p-3 text-left">Product</th>
+<th class="p-3 text-left">Qty</th>
+<th class="p-3 text-left">Amount</th>
+<th class="p-3 text-left">Date</th>
+</tr>
+</thead>
+
+<tbody>
+
+{% for item in earnings %}
+<tr class="border-t">
+<td class="p-3">#{{ item.order.id }}</td>
+<td class="p-3">{{ item.product.name }}</td>
+<td class="p-3">{{ item.quantity }}</td>
+<td class="p-3 text-green-600">₦{{ item.price }}</td>
+<td class="p-3">{{ item.order.created_at }}</td>
+</tr>
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</body>
+</html>

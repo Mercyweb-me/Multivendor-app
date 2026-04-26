@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Register</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+</head>
+
+<body class="bg-gray-100">
+
+<!-- NAVBAR -->
+<nav class="bg-white shadow-md">
+<div class="max-w-7xl mx-auto px-4">
+<div class="flex justify-between items-center h-16">
+
+<!-- Logo -->
+<div class="flex items-center">
+<a href="/" class="text-xl font-bold text-indigo-600">
+Marketplace
+</a>
+</div>
+
+<!-- Desktop Menu -->
+<div class="hidden md:flex space-x-6">
+<a href="/" class="text-gray-600 hover:text-indigo-600">Home</a>
+<a href="/products" class="text-gray-600 hover:text-indigo-600">Products</a>
+<a href="/login" class="text-gray-600 hover:text-indigo-600">Login</a>
+</div>
+
+<!-- Hamburger -->
+<div class="md:hidden">
+<button onclick="toggleMenu()" class="text-gray-700 focus:outline-none">
+
+<svg xmlns="http://www.w3.org/2000/svg"
+class="h-7 w-7"
+fill="none"
+viewBox="0 0 24 24"
+stroke="currentColor">
+
+<path stroke-linecap="round"
+stroke-linejoin="round"
+stroke-width="2"
+d="M4 6h16M4 12h16M4 18h16"/>
+
+</svg>
+
+</button>
+</div>
+
+</div>
+</div>
+
+<!-- Mobile Menu -->
+<div id="mobileMenu" class="hidden md:hidden px-4 pb-4">
+
+<a href="/" class="block py-2 text-gray-700 hover:text-indigo-600">
+Home
+</a>
+
+<a href="/products" class="block py-2 text-gray-700 hover:text-indigo-600">
+Products
+</a>
+
+<a href="/login" class="block py-2 text-gray-700 hover:text-indigo-600">
+Login
+</a>
+
+</div>
+
+</nav>
+
+
+<!-- REGISTER SECTION -->
+<div class="flex items-center justify-center min-h-screen px-4">
+
+<div class="max-w-5xl w-full bg-white shadow-2xl rounded-xl overflow-hidden grid md:grid-cols-2">
+
+<!-- LEFT MARKETING PANEL -->
+<div class="bg-indigo-600 text-white p-10 flex flex-col justify-center">
+
+<h1 class="text-4xl font-bold mb-4">
+Start Selling Today
+</h1>
+
+<p class="opacity-90 mb-6">
+Create your account and join our powerful marketplace.  
+Buy products or open your own vendor store.
+</p>
+
+<div class="space-y-3 text-sm opacity-90">
+
+<p>✔ Secure platform</p>
+<p>✔ Vendor marketplace</p>
+<p>✔ Real-time notifications</p>
+
+</div>
+
+</div>
+
+
+<!-- REGISTER FORM -->
+<div class="p-10">
+
+
+<h2 class="text-2xl font-bold mb-6 text-gray-700">
+    Create Account
+    </h2>
+    
+    {% if messages %}
+    <div class="mb-4">
+        {% for message in messages %}
+            <div class="bg-red-100 text-red-700 p-3 rounded-lg mb-2">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    
+    <form method="POST" class="space-y-4">
+    {% csrf_token %}
+    
+    <input
+    type="text"
+    name="username"
+    placeholder="Username"
+    required
+    class="w-full border p-3 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
+    
+    <input
+    type="email"
+    name="email"
+    placeholder="Email"
+    required
+    class="w-full border p-3 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
+    
+    <select
+    name="role"
+    required
+    class="w-full border p-3 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
+    <option value="buyer">Buyer</option>
+    <option value="vendor">Vendor</option>
+    </select>
+    
+    <input
+    type="password"
+    name="password"
+    placeholder="Password"
+    required
+    class="w-full border p-3 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
+    
+    <input
+    type="password"
+    name="password2"
+    placeholder="Confirm Password"
+    required
+    class="w-full border p-3 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
+    
+    <button
+    type="submit"
+    class="w-full bg-indigo-600 text-white p-3 rounded-lg font-semibold hover:bg-indigo-700 transition">
+    Create Account
+    </button>
+    
+    </form>
+<p class="mt-6 text-sm text-gray-600">
+
+Already have an account?
+
+<a href="/login" class="text-indigo-600 font-semibold hover:underline">
+Login
+</a>
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+
+<!-- JAVASCRIPT -->
+<script>
+
+function toggleMenu() {
+const menu = document.getElementById("mobileMenu");
+menu.classList.toggle("hidden");
+}
+
+</script>
+
+</body>
+</html>

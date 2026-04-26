@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>My Products</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+</head>
+
+<body class="bg-gray-100">
+
+<!-- HEADER -->
+<div class="bg-white shadow p-4 flex justify-between items-center">
+
+<div class="flex items-center space-x-3">
+<a href="{% url 'dashboard' %}">
+<i class="fas fa-arrow-left text-xl"></i>
+</a>
+
+<h1 class="font-bold text-xl">
+<i class="fas fa-box"></i> My Products
+</h1>
+</div>
+
+<a href="{% url 'post_product' %}"
+class="bg-indigo-600 text-white px-4 py-2 rounded">
+<i class="fas fa-plus"></i> Add
+</a>
+
+</div>
+
+
+<div class="max-w-7xl mx-auto mt-6">
+
+<div class="bg-white rounded-lg shadow overflow-hidden">
+
+<table class="w-full">
+
+<thead class="bg-gray-50">
+<tr>
+<th class="p-3 text-left">Image</th>
+<th class="p-3 text-left">Name</th>
+<th class="p-3 text-left">Price</th>
+<th class="p-3 text-left">Stock</th>
+<th class="p-3 text-left">Status</th>
+<th class="p-3 text-left">Action</th>
+</tr>
+</thead>
+
+<tbody>
+
+{% for p in products %}
+<tr class="border-t">
+
+    <td class="p-3">
+        {% if p.image %}
+            <img src="{{ p.image.url }}" class="h-12 w-12 rounded object-cover">
+        {% else %}
+            <div class="h-12 w-12 bg-gray-200 rounded"></div>
+        {% endif %}
+    </td>
+
+<td class="p-3">
+{{ p.name }}
+</td>
+
+<td class="p-3 text-green-600 font-semibold">
+    ₦{{ p.price|floatformat:2 }}
+</td>
+
+<td class="p-3">
+{{ p.stock }}
+</td>
+
+<td class="p-3">
+{% if p.is_active %}
+<span class="text-green-600">Active</span>
+{% else %}
+<span class="text-red-500">Inactive</span>
+{% endif %}
+</td>
+
+<td class="p-3 space-x-2">
+
+<a href="{% url 'edit_product' p.id %}"
+class="text-blue-600">
+<i class="fas fa-edit"></i>
+</a>
+
+<a href="{% url 'delete_product' p.id %}"
+class="text-red-600">
+<i class="fas fa-trash"></i>
+</a>
+
+</td>
+
+</tr>
+{% endfor %}
+
+</tbody>
+
+</table>
+
+{% if not products %}
+<div class="p-10 text-center">
+<i class="fas fa-box-open text-4xl text-gray-300"></i>
+<p class="text-gray-500 mt-3">
+No products yet
+</p>
+</div>
+{% endif %}
+
+</div>
+
+</div>
+
+</body>
+</html>

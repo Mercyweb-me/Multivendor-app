@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Settings</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+</head>
+
+<body class="bg-gray-100">
+
+<!-- HEADER -->
+<div class="bg-white shadow p-4 flex justify-between">
+
+<div class="flex items-center space-x-3">
+<a href="{% url 'profile' %}">
+<i class="fas fa-arrow-left text-xl"></i>
+</a>
+
+<h1 class="font-bold text-xl">Settings</h1>
+</div>
+
+</div>
+
+
+<div class="max-w-4xl mx-auto mt-6 space-y-4">
+
+<!-- ACCOUNT -->
+<div class="bg-white p-4 rounded-lg shadow">
+
+<a href="{% url 'edit_profile' %}"
+class="flex justify-between items-center p-3 hover:bg-gray-50 rounded">
+<span>
+<i class="fas fa-user mr-2"></i> Edit Profile
+</span>
+<i class="fas fa-chevron-right"></i>
+</a>
+
+<a href="{% url 'notifications' %}"
+class="flex justify-between items-center p-3 hover:bg-gray-50 rounded">
+<span>
+<i class="fas fa-bell mr-2"></i> Notifications
+</span>
+<i class="fas fa-chevron-right"></i>
+</a>
+
+<a href="{% url 'orders' %}"
+class="flex justify-between items-center p-3 hover:bg-gray-50 rounded">
+<span>
+<i class="fas fa-box mr-2"></i> Orders
+</span>
+<i class="fas fa-chevron-right"></i>
+</a>
+
+</div>
+
+<!-- VENDOR -->
+{% if request.user.role == "vendor" %}
+<div class="bg-white p-4 rounded-lg shadow">
+
+<a href="{% url 'vendor_earnings' %}"
+class="flex justify-between items-center p-3 hover:bg-gray-50 rounded">
+<span>
+<i class="fas fa-wallet mr-2"></i> Earnings
+</span>
+<i class="fas fa-chevron-right"></i>
+</a>
+
+</div>
+{% endif %}
+
+<!-- LOGOUT -->
+<div class="bg-white p-4 rounded-lg shadow">
+
+<a href="{% url 'logout' %}"
+class="flex justify-between items-center p-3 text-red-500 hover:bg-red-50 rounded">
+<span>
+<i class="fas fa-sign-out-alt mr-2"></i> Logout
+</span>
+<i class="fas fa-chevron-right"></i>
+</a>
+
+</div>
+
+</div>
+
+</body>
+</html>

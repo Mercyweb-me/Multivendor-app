@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+</head>
+
+<body class="bg-gray-100">
+
+<!-- NAVBAR -->
+<nav class="bg-white shadow-md">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+
+        <h1 class="text-xl font-bold text-blue-600">
+            MyTradingApp
+        </h1>
+
+        <!-- Desktop Menu -->
+        <div class="hidden md:flex space-x-6">
+            <a href="/" class="text-gray-700 hover:text-blue-600">Home</a>
+            <a href="/register/" class="text-gray-700 hover:text-blue-600">Register</a>
+        </div>
+
+        <!-- Hamburger -->
+        <button id="menu-btn" class="md:hidden text-gray-700 text-xl">
+            <i class="fas fa-bars"></i>
+        </button>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden md:hidden px-4 pb-4">
+        <a href="/" class="block py-2 text-gray-700">Home</a>
+        <a href="/register/" class="block py-2 text-gray-700">Register</a>
+    </div>
+</nav>
+
+
+<!-- LOGIN SECTION -->
+<div class="flex items-center justify-center min-h-screen px-4">
+
+    <div class="bg-white shadow-lg rounded-xl w-full max-w-md p-8">
+
+        <div class="text-center mb-6">
+            <h2 class="text-2xl font-bold text-gray-800">
+                Welcome Back
+            </h2>
+            <p class="text-gray-500 text-sm">
+                Login to your account
+            </p>
+        </div>
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <!-- USERNAME -->
+            <div class="mb-4">
+                <label class="block text-gray-600 text-sm mb-2">
+                    Username
+                </label>
+
+                <div class="flex items-center border rounded-lg px-3">
+                    <i class="fa fa-user text-gray-400"></i>
+                    <input type="text" name="username"
+                        class="w-full p-2 outline-none"
+                        placeholder="Enter username"
+                        required>
+                </div>
+            </div>
+
+            <!-- PASSWORD -->
+            <div class="mb-6">
+                <label class="block text-gray-600 text-sm mb-2">
+                    Password
+                </label>
+
+                <div class="flex items-center border rounded-lg px-3">
+                    <i class="fa fa-lock text-gray-400"></i>
+                    <input type="password" name="password"
+                        class="w-full p-2 outline-none"
+                        placeholder="Enter password"
+                        required>
+                </div>
+            </div>
+
+            <!-- LOGIN BUTTON -->
+            <button type="submit"
+                class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition">
+                Login
+            </button>
+
+        </form>
+
+        <!-- REGISTER LINK -->
+        <p class="text-center text-sm text-gray-500 mt-6">
+            Don't have an account?
+            <a href="/register/" class="text-blue-600 hover:underline">
+                Register
+            </a>
+        </p>
+
+    </div>
+
+</div>
+
+
+<!-- HAMBURGER SCRIPT -->
+<script>
+
+const btn = document.getElementById("menu-btn");
+const menu = document.getElementById("mobile-menu");
+
+btn.addEventListener("click", () => {
+    menu.classList.toggle("hidden");
+});
+
+</script>
+
+</body>
+</html>

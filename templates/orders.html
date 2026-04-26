@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Orders</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+</head>
+
+<body class="bg-gray-100">
+
+<!-- NAV -->
+<div class="bg-white shadow p-4 flex justify-between">
+<h1 class="font-bold text-xl">Orders</h1>
+
+<a href="{% url 'dashboard' %}">
+<i class="fas fa-arrow-left"></i>
+</a>
+</div>
+
+
+<div class="max-w-5xl mx-auto mt-8">
+
+{% for order in orders %}
+
+<div class="bg-white p-6 rounded-lg shadow mb-4">
+
+<!-- BUYER VIEW -->
+{% if request.user.role == "buyer" %}
+
+<div class="flex justify-between">
+<h3 class="font-bold">
+Order #{{ order.id }}
+</h3>
+
+<span class="text-sm bg-gray-100 px-3 py-1 rounded">
+{{ order.status }}
+</span>
+</div>
+
+<p class="text-gray-500 text-sm mt-2">
+Total: ₦{{ order.total_price }}
+</p>
+
+<p class="text-xs text-gray-400">
+{{ order.created_at }}
+</p>
+
+{% if order.status == "approved" %}
+<a href="{% url 'payment' order.id %}"
+class="inline-block mt-3 bg-blue-600 text-white px-4 py-2 rounded">
+Pay Now
+</a>
+{% elif order.status == "pending" %}
+<p class="text-yellow-600 mt-2 text-sm">
+Waiting for vendor approval
+</p>
+{% elif order.status == "paid" %}
+<p class="text-green-600 mt-2 text-sm">
+Payment completed
+</p>
+{% endif %}
+
+{% endif %}
+
+
+<!-- VENDOR VIEW -->
+{% if request.user.role == "vendor" %}
+
+<div class="flex justify-between">
+<h3 class="font-bold">
+{{ order.product.name }}
+</h3>
+
+<span class="text-sm bg-gray-100 px-3 py-1 rounded">
+{{ order.order.status }}
+</span>
+</div>
+
+<p class="text-gray-500">
+Qty: {{ order.quantity }}
+</p>
+
+<p class="text-gray-500">
+₦{{ order.price }}
+</p>
+
+<p class="text-xs text-gray-400">
+{{ order.order.created_at }}
+</p>
+
+{% if order.order.status == "pending" %}
+<a href="{% url 'approve_order' order.order.id %}"
+class="inline-block mt-3 bg-green-600 text-white px-3 py-1 rounded">
+Approve
+</a>
+{% endif %}
+
+{% endif %}
+
+</div>
+
+{% empty %}
+
+<div class="bg-white p-10 text-center rounded shadow">
+<i class="fas fa-box text-4xl text-gray-300"></i>
+<p class="mt-4 text-gray-500">
+No orders yet
+</p>
+</div>
+
+{% endfor %}
+
+</div>
+
+</body>
+</html>
