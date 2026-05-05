@@ -25,9 +25,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-yo*_bl^em@le(l!o$59fu
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'False') == 'True'
-
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
-
+ALLOWED_HOSTS =[".onrender.com"]
 AUTH_USER_MODEL = "multivendor.User"
 
 
