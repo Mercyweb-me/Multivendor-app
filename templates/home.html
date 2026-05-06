@@ -2,8 +2,14 @@
 <html>
 <head>
 <title>Marketplace</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <script src="https://cdn.tailwindcss.com"></script>
+<style>
+  body { font-size: 1rem; }
+  .hero-copy { font-size: 1.125rem; }
+  .site-heading { font-size: clamp(2.75rem, 5vw, 4.5rem); }
+</style>
 
 <!-- AOS Animation -->
 <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
@@ -18,23 +24,33 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
 
 <!-- NAVBAR -->
 <nav class="bg-white shadow fixed w-full z-50">
-<div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+  <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+    <div class="flex items-center justify-between w-full md:w-auto">
+      <h1 class="font-bold text-2xl text-indigo-600">
+        MultiVendor
+      </h1>
+      <button id="mobileMenuBtn" class="md:hidden text-gray-700 text-2xl">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
 
-<h1 class="font-bold text-2xl text-indigo-600">
-MultiVendor
-</h1>
+    <div id="desktopMenu" class="hidden md:flex items-center space-x-6 text-lg">
+      <a href="#about" class="text-gray-600 hover:text-indigo-600 font-semibold">About</a>
+      <a href="#features" class="text-gray-600 hover:text-indigo-600 font-semibold">Features</a>
+      <a href="/products" class="text-gray-600 hover:text-indigo-600 font-semibold">Marketplace</a>
+      <a href="/login" class="bg-indigo-600 text-white px-4 py-2 rounded font-semibold">Login</a>
+    </div>
+  </div>
 
-<div class="space-x-6">
-<a href="#about" class="text-gray-600 hover:text-indigo-600">About</a>
-<a href="#features" class="text-gray-600 hover:text-indigo-600">Features</a>
-<a href="/products" class="text-gray-600 hover:text-indigo-600">Marketplace</a>
-<a href="/login" class="bg-indigo-600 text-white px-4 py-2 rounded">
-Login
-</a>
-</div>
-
-</div>
-</nav>
+  <div id="mobileMenu" class="hidden md:hidden bg-white border-t border-gray-200">
+    <div class="px-6 py-4 space-y-3">
+      <a href="#about" class="block text-gray-600 hover:text-indigo-600 font-semibold">About</a>
+      <a href="#features" class="block text-gray-600 hover:text-indigo-600 font-semibold">Features</a>
+      <a href="/products" class="block text-gray-600 hover:text-indigo-600 font-semibold">Marketplace</a>
+      <a href="/login" class="block bg-indigo-600 text-white px-4 py-2 rounded font-semibold">Login</a>
+    </div>
+  </div>
+</nav> 
 
 
 <!-- HERO -->
@@ -43,12 +59,12 @@ Login
 <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-10 items-center">
 
 <div data-aos="fade-right">
-<h1 class="text-5xl font-bold leading-tight">
+<h1 class="site-heading font-bold leading-tight">
 Buy & Sell Products  
 <br> Across Multiple Vendors
 </h1>
 
-<p class="mt-6 text-lg opacity-90">
+<p class="hero-copy mt-6 opacity-90">
 Create your store, upload products, and start earning instantly.
 Join the fastest growing marketplace.
 </p>
@@ -198,9 +214,19 @@ Multi vendor ecommerce platform
 
 
 <script>
-AOS.init({
-duration: 1000,
-once: true
+function toggleMenu() {
+  const menu = document.getElementById("mobileMenu");
+  menu.classList.toggle("hidden");
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+  const menuBtn = document.getElementById("mobileMenuBtn");
+  if (menuBtn) menuBtn.addEventListener("click", toggleMenu);
+
+  AOS.init({
+    duration: 1000,
+    once: true
+  });
 });
 </script>
 

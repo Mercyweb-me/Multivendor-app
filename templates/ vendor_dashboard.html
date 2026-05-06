@@ -2,16 +2,21 @@
 <html>
 <head>
 <title>My Products</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script src="https://cdn.tailwindcss.com"></script>
+<style>
+  body { font-size: 1rem; }
+  h1, h3 { font-weight: 700; }
+</style>
 <link rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 </head>
 
-<body class="bg-gray-100">
+<body class="bg-gray-100 text-base lg:text-lg">
 
 <div class="bg-white shadow p-4 flex justify-between">
 
-<h1 class="font-bold text-xl">
+<h1 class="font-bold text-3xl">
 My Products
 </h1>
 
@@ -38,7 +43,7 @@ class="w-full h-40 object-cover">
 
 <div class="p-4">
 
-<h3 class="font-bold">
+<h3 class="font-bold text-xl">
 {{ p.name }}
 </h3>
 
@@ -78,4 +83,4 @@ No products yet
 </div>
 
 </body>
-</htm>
+</html>
