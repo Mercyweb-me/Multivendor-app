@@ -7,6 +7,22 @@
 
 <script src="https://cdn.tailwindcss.com"></script>
 
+<style>
+    .spinner {
+        display: inline-block;
+        width: 1rem;
+        height: 1rem;
+        border: 2px solid rgba(255,255,255,0.7);
+        border-top-color: white;
+        border-radius: 9999px;
+        animation: spin 0.75s linear infinite;
+    }
+
+    @keyframes spin {
+        to { transform: rotate(360deg); }
+    }
+</style>
+
 </head>
 
 <body class="bg-gray-100">
@@ -119,7 +135,7 @@ Buy products or open your own vendor store.
     </div>
     {% endif %}
     
-    <form method="POST" class="space-y-4">
+    <form method="POST" id="registerForm" class="space-y-4">
     {% csrf_token %}
     
     <input
@@ -160,8 +176,10 @@ Buy products or open your own vendor store.
     
     <button
     type="submit"
-    class="w-full bg-indigo-600 text-white p-3 rounded-lg font-semibold hover:bg-indigo-700 transition">
-    Create Account
+    id="registerSubmit"
+    class="w-full bg-indigo-600 text-white p-3 rounded-lg font-semibold hover:bg-indigo-700 transition flex items-center justify-center gap-2">
+    <span class="btn-text">Create Account</span>
+    <span id="registerSpinner" class="spinner hidden"></span>
     </button>
     
     </form>
@@ -186,12 +204,23 @@ Login
 
 <!-- JAVASCRIPT -->
 <script>
-
 function toggleMenu() {
-const menu = document.getElementById("mobileMenu");
-menu.classList.toggle("hidden");
+    const menu = document.getElementById("mobileMenu");
+    menu.classList.toggle("hidden");
 }
 
+const registerForm = document.getElementById("registerForm");
+const registerSubmit = document.getElementById("registerSubmit");
+const registerSpinner = document.getElementById("registerSpinner");
+
+if (registerForm) {
+    registerForm.addEventListener("submit", () => {
+        registerSubmit.disabled = true;
+        registerSubmit.classList.add("opacity-80", "cursor-not-allowed");
+        registerSpinner.classList.remove("hidden");
+        registerSubmit.querySelector(".btn-text").textContent = "Registering...";
+    });
+}
 </script>
 
 </body>

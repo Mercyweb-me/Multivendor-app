@@ -11,6 +11,22 @@
     <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
+    <style>
+        .spinner {
+            display: inline-block;
+            width: 1rem;
+            height: 1rem;
+            border: 2px solid rgba(255,255,255,0.6);
+            border-top-color: white;
+            border-radius: 9999px;
+            animation: spin 0.75s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+
 </head>
 
 <body class="bg-gray-100">
@@ -57,7 +73,7 @@
             </p>
         </div>
 
-        <form method="POST">
+        <form method="POST" id="loginForm">
             {% csrf_token %}
 
             <!-- USERNAME -->
@@ -91,9 +107,10 @@
             </div>
 
             <!-- LOGIN BUTTON -->
-            <button type="submit"
-                class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition">
-                Login
+            <button type="submit" id="loginSubmit"
+                class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition flex items-center justify-center gap-2">
+                <span class="btn-text">Login</span>
+                <span id="loginSpinner" class="spinner hidden"></span>
             </button>
 
         </form>
@@ -113,7 +130,6 @@
 
 <!-- HAMBURGER SCRIPT -->
 <script>
-
 const btn = document.getElementById("menu-btn");
 const menu = document.getElementById("mobile-menu");
 
@@ -121,6 +137,18 @@ btn.addEventListener("click", () => {
     menu.classList.toggle("hidden");
 });
 
+const loginForm = document.getElementById("loginForm");
+const loginSubmit = document.getElementById("loginSubmit");
+const loginSpinner = document.getElementById("loginSpinner");
+
+if (loginForm) {
+    loginForm.addEventListener("submit", () => {
+        loginSubmit.disabled = true;
+        loginSubmit.classList.add("opacity-80", "cursor-not-allowed");
+        loginSpinner.classList.remove("hidden");
+        loginSubmit.querySelector(".btn-text").textContent = "Logging in...";
+    });
+}
 </script>
 
 </body>
